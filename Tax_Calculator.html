@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Income Tax Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ghana Income Tax Calculator</h2>
+        <label>Monthly Basic Salary (GHS):</label>
+        <input type="number" id="salary" required>
+        
+        <label>Percentage for Tier 3 (%):</label>
+        <input type="number" id="tier3" required>
+        
+        <label>Allowance (GHS):</label>
+        <input type="number" id="allowance" required>
+        
+        <label>Tax Relief (GHS):</label>
+        <input type="number" id="relief" required>
+        
+        <button onclick="calculateTax()">Calculate</button>
+        
+        <h3>Results:</h3>
+        <p>Total Earnings: GHS <span id="totalEarnings">0</span></p>
+        <p>Taxable Income: GHS <span id="taxableIncome">0</span></p>
+        <p>Income Tax: GHS <span id="incomeTax">0</span></p>
+        <p>Net Income: GHS <span id="netIncome">0</span></p>
+    </div>
+    
+    <script>
+        function calculateTax() {
+            let salary = parseFloat(document.getElementById('salary').value) * 12;
+            let tier3 = parseFloat(document.getElementById('tier3').value) / 100 * salary;
+            let allowance = parseFloat(document.getElementById('allowance').value) * 12;
+            let relief = parseFloat(document.getElementById('relief').value);
+            
+            let totalEarnings = salary + allowance;
+            let taxableIncome = totalEarnings - tier3 - relief;
+            
+            let tax = 0;
+            let remainingIncome = taxableIncome;
+            
+            if (remainingIncome > 43260) {
+                tax += (remainingIncome - 43260) * 0.25;
+                remainingIncome = 43260;
+            }
+            if (remainingIncome > 7200) {
+                tax += (remainingIncome - 7200) * 0.175;
+                remainingIncome = 7200;
+            }
+            if (remainingIncome > 5640) {
+                tax += (remainingIncome - 5640) * 0.10;
+                remainingIncome = 5640;
+            }
+            if (remainingIncome > 4320) {
+                tax += (remainingIncome - 4320) * 0.05;
+            }
+            
+            let netIncome = totalEarnings - tax;
+            
+            document.getElementById('totalEarnings').innerText = totalEarnings.toFixed(2);
+            document.getElementById('taxableIncome').innerText = taxableIncome.toFixed(2);
+            document.getElementById('incomeTax').innerText = tax.toFixed(2);
+            document.getElementById('netIncome').innerText = netIncome.toFixed(2);
+        }
+    </script>
+</body>
+</html>
