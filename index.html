@@ -51,8 +51,9 @@
             let allowance = parseFloat(document.getElementById('allowance').value) * 12;
             let relief = parseFloat(document.getElementById('relief').value);
             
+            let ssnit = 0.055 * salary; // 5.5% Social Security Tax
             let totalEarnings = salary + allowance;
-            let taxableIncome = totalEarnings - tier3 - relief;
+            let taxableIncome = totalEarnings - tier3 - relief - ssnit;
             
             let tax = 0;
             let remainingIncome = taxableIncome;
@@ -73,7 +74,7 @@
                 tax += (remainingIncome - 4320) * 0.05;
             }
             
-            let netIncome = totalEarnings - tax;
+            let netIncome = totalEarnings - tax - ssnit;
             
             document.getElementById('totalEarnings').innerText = totalEarnings.toFixed(2);
             document.getElementById('taxableIncome').innerText = taxableIncome.toFixed(2);
