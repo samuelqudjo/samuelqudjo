@@ -52,8 +52,8 @@
             let relief = parseFloat(document.getElementById('relief').value);
             
             let ssnit = 0.055 * salary; // 5.5% Social Security Tax
-            let totalEarnings = salary + allowance;
-            let taxableIncome = totalEarnings - tier3 - relief - ssnit;
+            let totalEarnings = (salary + allowance) - tier3 ;
+            let taxableIncome = totalEarnings - (relief + ssnit);
             
             let tax = 0;
             let remainingIncome = taxableIncome;
